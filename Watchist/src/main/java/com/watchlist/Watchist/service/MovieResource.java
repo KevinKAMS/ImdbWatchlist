@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.watchlist.Watchist.model.Movie;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MovieResource {
     private final MovieService movieService;
 
+    @Autowired
     public MovieResource(MovieService movieService) {
         this.movieService = movieService;
     }
@@ -59,25 +61,25 @@ public class MovieResource {
     }
 
     @PostMapping("/search")
-    public List<Movie> search(@RequestParam("movieTitle") String movieTitle) {
-        return movieService.search(movieTitle);
+    public ResponseEntity<List<Movie>> search(@RequestParam("movieTitle") String movieTitle) {
+        return new ResponseEntity<>(movieService.search(movieTitle), HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/favorites")
-    public List<Movie> watchlist(){
+    public ResponseEntity<List<Movie>> watchlist(){
         try{
-            return movieService.getFavorites();
+            return new ResponseEntity<>(movieService.getFavorites(), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ArrayList<Movie>();
+            return new ResponseEntity<>(new ArrayList<Movie>(), HttpStatus.OK);
         }
     }
     
     @RequestMapping("/{movieId}/favorite")
-    public Movie setFavorite(@PathVariable("movieId") long id){
+    public ResponseEntity<Movie> setFavorite(@PathVariable("movieId") long id){
         try {
-            return movieService.favoriteToggle(id);        
+            return new ResponseEntity<>(movieService.favoriteToggle(id), HttpStatus.OK);        
         } catch (Exception e) {
             e.printStackTrace();
             return null;

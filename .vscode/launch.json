@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-WatchistApplication<Watchist>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.watchlist.Watchist.WatchistApplication",
+            "projectName": "Watchist",
+            "args": ""
+        }
+    ]
+}

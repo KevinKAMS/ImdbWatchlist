@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import info.movito.themoviedbapi.model.MovieDb;
@@ -12,6 +14,7 @@ import info.movito.themoviedbapi.model.MovieDb;
 public class Movie implements Serializable, Comparable<Movie>{
     
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
     private Long id;  
     private String title;
@@ -99,10 +102,9 @@ public class Movie implements Serializable, Comparable<Movie>{
     }
 
     public Movie saveMovieFromApi(MovieDb apiMovie) {
-        this.id = Long.valueOf(apiMovie.getId());
         this.title = apiMovie.getTitle();
         this.year = apiMovie.getReleaseDate();
-        if(this.year!=null|!this.year.equals("")){
+        if(this.year!=null|!this.year.isEmpty()){
             this.year = this.year.substring(0,4);
         } else {
             this.year = "Unknow Release Year";

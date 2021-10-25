@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.watchlist.Watchist.model.Movie;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import info.movito.themoviedbapi.TmdbApi;
@@ -13,18 +14,27 @@ import info.movito.themoviedbapi.model.MovieDb;
 
 @Component
 public class ImdbApi {
-
-    private String imdbApiKey = "676c10a663703153a015781707d8b271";
+    
+    @Value("${app.imdbApiKey}")
+    private String imdbApiKey;
+    final static String language = "pt-BR";
+    private static TmdbApi apiConnection;
 
     public TmdbApi connect() {
-        TmdbApi apiConnection = new TmdbApi(imdbApiKey);
+        if (apiConnection == null) {
+            try {
+                TmdbApi apiConnection = new TmdbApi(imdbApiKey);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
         return apiConnection;
     }
 
     public ArrayList<Movie> search(String movieTitle) {
         TmdbApi connection = this.connect();
         TmdbSearch search = connection.getSearch();
-        List<MovieDb> searchList = search.searchMovie(movieTitle, null, "pt-BR", false, null).getResults();
+        List<MovieDb> searchList = search.searchMovie(movieTitle, null, language, false, null).getResults();
         ArrayList<Movie> movieList = new ArrayList<>();
         searchList.forEach((movie) -> {
             Movie newMovie = new Movie();

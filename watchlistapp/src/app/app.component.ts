@@ -11,7 +11,6 @@ import { MovieService } from './movie.service';
 export class AppComponent implements OnInit{
   
   public movies: Movie[];
-  public editMovie: Movie;
   eventEmitterService: any;
 
   constructor(private movieService: MovieService) { }
@@ -43,14 +42,12 @@ export class AppComponent implements OnInit{
   }
 
   public setFavorite(movie: Movie): void{
-    console.log(movie.id);
     this.movieService.setFavorite(movie.id).subscribe(
 
     );
   }
 
   public searchMovies(key: string): void {
-    console.log(key);
     const container = document.getElementById('main-container');
     const button = document.createElement('button');
     button.type = 'button';

@@ -52,7 +52,7 @@ public class MovieService{
 
     
     public List<Movie> search(String movieTitle) {
-        if (movieTitle.equals("")) {
+        if (movieTitle.isEmpty()) {
         ArrayList<Movie> movieList = new ArrayList();
         return movieList;
     }
