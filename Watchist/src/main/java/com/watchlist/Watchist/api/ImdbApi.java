@@ -20,10 +20,10 @@ public class ImdbApi {
     final static String language = "pt-BR";
     private static TmdbApi apiConnection;
 
-    public TmdbApi connect() {
+    public TmdbApi connect(TmdbApi apiConnection) {
         if (apiConnection == null) {
             try {
-                TmdbApi apiConnection = new TmdbApi(imdbApiKey);
+                apiConnection = new TmdbApi(imdbApiKey);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -32,7 +32,7 @@ public class ImdbApi {
     }
 
     public ArrayList<Movie> search(String movieTitle) {
-        TmdbApi connection = this.connect();
+        TmdbApi connection = this.connect(apiConnection);
         TmdbSearch search = connection.getSearch();
         List<MovieDb> searchList = search.searchMovie(movieTitle, null, language, false, null).getResults();
         ArrayList<Movie> movieList = new ArrayList<>();
