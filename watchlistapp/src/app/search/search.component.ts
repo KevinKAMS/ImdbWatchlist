@@ -17,7 +17,8 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  
+  //Search movie by calling the .searchMovie function
+  //If it doesn't return anything, open a modal showing a warning
   public searchMovies(key: string): void {
     const container = document.getElementById('main-container');
     const button = document.createElement('button');
